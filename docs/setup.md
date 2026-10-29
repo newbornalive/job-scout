@@ -10,9 +10,9 @@ Requires Node.js 22+; no npm dependencies. API usage is billed to each user's ow
 3. Set `OPENAI_MODEL` to a model your API project can access that supports Responses and strict Structured Outputs. Model is deliberately configurable, with no assumed subscription access.
 4. Generate a local connection token with `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`; put it in `JOB_SCOUT_TOKEN` in `.env`.
 5. Run `npm start` from this folder. The server listens only on `127.0.0.1:43127`.
-6. Reload the unpacked extension to grant its new loopback host permission. Expand **OpenAI API 模式**, enter the local connection token, and paste your own resume text into the DS / DA / Research slots (at least one). Enter your own preferences; API mode does not assume citizenship or location.
-7. Click **检查本机连接**. This checks local configuration only, not key validity or model access, and does not call OpenAI.
-8. Read a job or use **载入 / API 分析** on a saved record. Confirm the complete JD, review the data-sharing checkbox, then click **用 OpenAI 分析当前职位**. Keep the extension page open until it finishes. For a stable full-page UI, open `chrome-extension://YOUR_EXTENSION_ID/popup.html` in a tab; paste a JD or load a saved record there.
+6. Reload the unpacked extension to grant its new loopback host permission. Expand **OpenAI API mode**, enter the local connection token, and paste your own resume text into the DS / DA / Research slots (at least one). Enter your own preferences; API mode does not assume citizenship or location.
+7. Click **Check connection**. This checks local configuration only, not key validity or model access, and does not call OpenAI.
+8. Read a job or use **Load / API analysis** on a saved record. Confirm the complete JD, review the data-sharing checkbox, then click **Analyze job with OpenAI**. Keep the extension page open until it finishes. For a stable full-page UI, open `chrome-extension://YOUR_EXTENSION_ID/popup.html` in a tab; paste a JD or load a saved record there.
 
 ### Result and cost behavior
 
@@ -35,3 +35,4 @@ JD and resume contents are treated as untrusted evidence in model instructions. 
 Run `npm test`. Tests use a mocked OpenAI transport and local HTTP requests, never a real API key. Live OpenAI access and Chrome/Edge integration must be verified separately using an available model and a configured account.
 
 The API integration follows [Responses Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs). Rule-mode defaults are generic examples; API mode accepts each user's own profiles. Before publishing, review those defaults and do not add `.env`, personal PDFs, browser exports or `tmp/` to the repository.
+

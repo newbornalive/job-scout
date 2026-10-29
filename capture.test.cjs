@@ -20,3 +20,4 @@ async function scenario(stale){
   const stale=await scenario(true);assert.ok(stale.error);assert.equal(stale.jd,undefined);
   console.log('JD capture checks passed: fresh detail accepted; stale detail rejected');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+

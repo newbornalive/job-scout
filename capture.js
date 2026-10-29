@@ -6,7 +6,7 @@ async function captureJobDetail(jobId) {
   const selectedId=()=>new URL(location.href).searchParams.get('currentJobId')||location.pathname.match(/\/jobs\/view\/(\d+)/)?.[1];
   const before=read();const alreadySelected=selectedId()===jobId;
   const link=[...document.querySelectorAll('a[href*="/jobs/view/"]')].find(a=>a.href.match(/\/jobs\/view\/(\d+)/)?.[1]===jobId);
-  if(!alreadySelected){if(!link)return {error:'职位卡片已不在页面，请重新扫描'};link.click();}
+  if(!alreadySelected){if(!link)return {error:'The job card is no longer on the page. Scan again.'};link.click();}
   let stable='';let stableSince=0;
   const deadline=Date.now()+12000;
   while(Date.now()<deadline){
@@ -25,5 +25,6 @@ async function captureJobDetail(jobId) {
       return {...data,jdComplete,applicationUrl,url:'https://www.linkedin.com/jobs/view/'+jobId+'/'};
     }
   }
-  return {error:'JD 未加载或无法确认对应职位，保留待分析状态'};
+  return {error:'The description did not load or could not be matched to this job. Analysis remains pending.'};
 }
+

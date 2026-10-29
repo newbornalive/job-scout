@@ -16,13 +16,13 @@ for(const title of ['Senior Data Scientist','Marketing Scientist','Model Validat
 for(const title of ['Sales Representative','Software Engineer','Data Entry Clerk','Research Coordinator']){
   assert.equal(e.classifyTitle(title).eligible,false,title);
 }
-assert.equal(e.classifyTitle('Senior Data Analyst').priority,'扩量');
+assert.equal(e.classifyTitle('Senior Data Analyst').priority,'Broader search');
 assert.ok(e.classifyTitle('Model Risk Analyst').cautions.length);
 assert.equal(e.analyze('','Data Scientist').stage,'awaiting-jd');
 const result=e.analyze('Python SQL model validation stability monitoring','Model Validation Analyst');
 assert.equal(result.stage,'matched');
 assert.ok(result.evidence.some(x=>x.hits.includes('stability')));
-assert.equal(result.titleMatch.priority,'主投');
+assert.equal(result.titleMatch.priority,'Primary');
 console.log('35 salary, title filtering, and JD matching checks passed');
 const completeLow={id:'low',jd:'Full JD',jdComplete:true,analysis:{score:0}};
 const completeHigh={id:'high',jd:'Full JD',jdComplete:true,analysis:{score:82}};
@@ -45,3 +45,9 @@ assert.equal(route('Bayesian MCMC Gibbs missing data diagnostic accuracy publica
 assert.equal(route('XGBoost model validation','Principal Data Scientist').primary.id,'DS');
 assert.ok(route('XGBoost dashboard tableau','Data Scientist Customer Analytics').alternatives.some(p=>p.id==='DS'));
 console.log('8 resume routing checks passed');
+
+
+assert.equal(e.normalizeStatus('\u9762\u8bd5\u4e2d'),'Interviewing');
+assert.equal(e.normalizeStatus('\u5df2\u7533\u8bf7'),'Applied');
+assert.equal(e.normalizeStatus('Closed'),'Closed');
+console.log('Legacy application status compatibility checks passed');

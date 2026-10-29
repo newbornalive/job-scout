@@ -1,21 +1,22 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>Job Scout</title><link rel="stylesheet" href="style.css"></head><body>
-<header><span>JOB SCOUT</span><h1>找到下一场面试。</h1><p>过去 48 小时 · 全美 · 远程 / 混合 / 现场 · 无薪资下限</p></header>
-<main><div class="row"><button id="scan">读取并保存当前职位</button><button id="batch">扫描 Title → JD → 匹配</button><button id="open">搜索职位 ↗</button></div><p id="notice" role="status">扫描会打开独立工作台，先筛选名称，再依次读取已加载职位的 JD。请保持 LinkedIn 页面打开。</p>
-<details><summary>示例岗位方向表 / 选择搜索方向</summary><div id="role-table"></div></details>
-<label>职位名称<input id="title" placeholder="Data Scientist"></label><label>公司<input id="company" placeholder="公司名称"></label><label>职位链接<input id="url" placeholder="https://www.linkedin.com/jobs/view/..."></label>
-<label>工作地点 / 地址<input id="location" placeholder="城市、州、Remote；未提供则留空"></label><label>申请链接<input id="applicationUrl" placeholder="外部申请链接；未获取时使用 LinkedIn 职位页"></label>
-<label><input type="checkbox" id="jdComplete"> 已读取展开后的完整 JD（手动粘贴请确认）</label>
-<label>职位描述<textarea id="jd" rows="7" placeholder="粘贴完整 JD，分析关键词、匹配点和薪资区间"></textarea></label><button id="analyze">分析 JD / 调整搜索关键词</button><section id="result"></section>
-<details id="apiSettings"><summary>OpenAI API 模式 · 自备 API key</summary>
-<p>启动本机后端后使用。OpenAI API key 只写入后端 .env，不填写在这里。接口固定为 http://127.0.0.1:43127。</p>
-<label>本机连接令牌（JOB_SCOUT_TOKEN）<input id="apiToken" type="password" autocomplete="off" placeholder="与后端 .env 的 JOB_SCOUT_TOKEN 一致"></label>
-<label>DS 简历正文<textarea id="resumeDS" rows="4" maxlength="25000" placeholder="粘贴自己的简历正文，可省略联系方式"></textarea></label>
-<label>DA 简历正文<textarea id="resumeDA" rows="4" maxlength="25000"></textarea></label>
-<label>Research 简历正文<textarea id="resumeResearch" rows="4" maxlength="25000"></textarea></label>
-<label>求职偏好<textarea id="candidatePreferences" rows="2" maxlength="5000" placeholder="自行填写地区、工作方式、工作许可等；没有填写的不作假设"></textarea></label>
-<div class="row"><button id="apiSettingsSave">保存本机配置</button><button id="apiHealth">检查本机连接（不调用模型）</button></div>
-<label><input id="apiConsent" type="checkbox">本次点击将把当前职位名称、完整 JD、上述非空简历和偏好发送给 OpenAI，费用由我的 API 账户承担。</label>
-<button id="apiAnalyze">用 OpenAI 分析当前职位</button><p id="apiNotice" role="status">规则模式继续可用。API 模式仅在点击此按钮后调用。</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Job Scout</title><link rel="stylesheet" href="style.css"></head><body>
+<header><span>JOB SCOUT</span><h1>Find your next interview.</h1><p>Past 48 hours · United States · Remote / Hybrid / Onsite · Any salary</p></header>
+<main><div class="row"><button id="scan">Read and save job</button><button id="batch">Scan titles and match jobs</button><button id="open">Search jobs ↗</button></div><p id="notice" role="status">Scanning opens a workspace, filters loaded titles, then reads their descriptions. Keep the LinkedIn tab open.</p>
+<details><summary>Example role families / Search directions</summary><div id="role-table"></div></details>
+<label>Job title<input id="title" placeholder="Data Scientist"></label><label>Company<input id="company" placeholder="Company name"></label><label>Job URL<input id="url" placeholder="https://www.linkedin.com/jobs/view/..."></label>
+<label>Location / Address<input id="location" placeholder="City, state, or Remote; leave blank if unavailable"></label><label>Application URL<input id="applicationUrl" placeholder="External application URL; otherwise use the LinkedIn job page"></label>
+<label><input type="checkbox" id="jdComplete"> I have read the expanded, complete job description</label>
+<label>Job description<textarea id="jd" rows="7" placeholder="Paste the complete job description to analyze keywords and salary ranges"></textarea></label><button id="analyze">Analyze JD / Refine search</button><section id="result"></section>
+<details id="apiSettings"><summary>OpenAI API mode · Bring your own API key</summary>
+<p>Start the local backend first. Keep your OpenAI API key in the backend .env file, not here. Endpoint: http://127.0.0.1:43127.</p>
+<label>Local connection token (JOB_SCOUT_TOKEN)<input id="apiToken" type="password" autocomplete="off" placeholder="Use JOB_SCOUT_TOKEN from your backend .env file"></label>
+<label>DS resume text<textarea id="resumeDS" rows="4" maxlength="25000" placeholder="Paste your own resume; contact details are optional"></textarea></label>
+<label>DA resume text<textarea id="resumeDA" rows="4" maxlength="25000"></textarea></label>
+<label>Research resume text<textarea id="resumeResearch" rows="4" maxlength="25000"></textarea></label>
+<label>Job preferences<textarea id="candidatePreferences" rows="2" maxlength="5000" placeholder="Enter location, work arrangements, work authorization, and other preferences; unspecified details are not assumed"></textarea></label>
+<div class="row"><button id="apiSettingsSave">Save local settings</button><button id="apiHealth">Check connection (no model call)</button></div>
+<label><input id="apiConsent" type="checkbox">I understand that this action sends the current job title, complete description, supplied resumes, and preferences to OpenAI and is billed to my API account.</label>
+<button id="apiAnalyze">Analyze job with OpenAI</button><p id="apiNotice" role="status">Rule mode remains available. API analysis runs only when you click this button.</p>
 </details>
-<div class="row"><button id="save">保存职位</button><button id="export">导出 JSON</button><button id="csv">导出 CSV</button></div><h2>申请记录 <small id="count"></small></h2><section id="records"></section>
-<details><summary>筛选配置与使用说明</summary><p>规则模式使用通用示例词表，不包含个人身份、经历或求职偏好。搜索仅限过去 48 小时发布，按最新排序。手动打开或粘贴的职位需核实发布时间。优先数据科学、统计、实验和营销分析。匹配分仅为关键词覆盖指标，不代表录取概率。未匹配技能需要核实，不代表你不会。</p><p>薪资中点仅供填写期望薪资参考：多个区间或单位不明时需人工确认。不填写历史薪资，不自动投递。所有记录仅保存在当前浏览器。</p><p>请在 API 模式填写自己的真实简历和偏好。规则模式提供关键词建议；可选 API 模式会在确认后发送填写的简历正文，不改写简历。</p></details></main><script src="engine.js"></script><script src="capture.js"></script><script src="popup.js"></script><script src="api-ui.js"></script></body></html>
+<div class="row"><button id="save">Save job</button><button id="export">Export JSON</button><button id="csv">Export CSV</button></div><h2>Application records <small id="count"></small></h2><section id="records"></section>
+<details><summary>Settings and usage notes</summary><p>Rule mode uses a generic example vocabulary, not a personal profile. Searches default to US jobs posted within 48 hours, newest first. Verify dates for manually opened or pasted jobs. Role families focus on data science, statistics, experimentation, and marketing analytics. Keyword coverage is not a hiring probability; missing keywords do not prove missing skills.</p><p>Salary midpoints are references only. Review multiple ranges and unclear units. The extension does not fill salary history or submit applications. Records are stored in this browser.</p><p>Supply your own resume and preferences in API mode. Rule mode suggests keywords; optional API mode sends your supplied text after confirmation and does not rewrite your resume.</p></details></main><script src="engine.js"></script><script src="capture.js"></script><script src="popup.js"></script><script src="api-ui.js"></script></body></html>
+

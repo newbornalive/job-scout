@@ -33,3 +33,4 @@ These controls target a personal local installation. This is not a multi-user ho
 ## Verification boundary
 
 Unit and local HTTP tests cover deterministic behavior and mocked provider responses. A local browser smoke run covered configuration, explicit-send gating, safe text rendering, persistence, stale-result labels and CSV export. It is not included in the portable automated suite yet. Live provider compatibility, live LinkedIn selectors and recommendation quality remain separate verification tasks.
+

@@ -7,3 +7,4 @@ Keep examples synthetic. Do not include resumes, contact details, API keys, `.en
 For extraction changes, include a regression test for stale or mismatched detail content. For API changes, mock the provider and test unsuccessful responses as well as success. Keep model reasoning separate from deterministic keyword scores.
 
 For UI changes, load the extension in Chrome/Edge and verify saved-job loading, status preservation, API consent and export. Describe exactly what was tested; do not imply mocked tests prove live integration.
+

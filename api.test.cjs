@@ -5,7 +5,7 @@ const {validate}=require('./api-contract.cjs');
 const token='local-test-token-'.repeat(3);
 const jd='We require Python and SQL for predictive modeling. Experience with Bayesian inference is preferred.';
 const input={title:'Senior Data Scientist',jd,jdComplete:true,preferences:'Remote',resumes:{DS:'Built predictive models with Python and SQL.',DA:'',Research:''}};
-const result={summary:'分析',recommendedResume:'DS',recommendationReason:'Python 证据',requirements:[{requirement:'Python',kind:'required',jdEvidence:'require Python and SQL',resume:'DS',resumeEvidence:'Python and SQL',assessment:'supported'}],strengths:['模型'],questions:[],nextStep:'复核'};
+const result={summary:'Analysis',recommendedResume:'DS',recommendationReason:'Python evidence',requirements:[{requirement:'Python',kind:'required',jdEvidence:'require Python and SQL',resume:'DS',resumeEvidence:'Python and SQL',assessment:'supported'}],strengths:['Models'],questions:[],nextStep:'Review'};
 const response=value=>new Response(JSON.stringify(value),{status:200});
 const completed=r=>({status:'completed',model:'test-model',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(r)}]}],usage:{input_tokens:100,output_tokens:50}});
 async function withServer(options,fn){
@@ -61,12 +61,12 @@ test('handle refusal, truncation, invalid schema, malformed output',async()=>{
 test('upstream billing errors are redacted and never automatically retried',async()=>{
  let calls=0;
  await withServer({fetchImpl:async()=>{calls++;return new Response('sensitive details',{status:429});}},async call=>{
-  const r=await call();assert.equal(r.status,502);assert.match((await r.json()).error,/额度/);
+  const r=await call();assert.equal(r.status,502);assert.match((await r.json()).error,/quota/);
  });assert.equal(calls,1);
 });
 test('timeout and concurrent paid calls',async()=>{
  await withServer({fetchImpl:async()=>{throw new DOMException('secret','TimeoutError');}},async call=>{
-  assert.match((await (await call()).json()).error,/超时/);
+  assert.match((await (await call()).json()).error,/timed out/);
  });
  let release,started;const pending=new Promise(r=>started=r);
  await withServer({fetchImpl:async()=>{started();await new Promise(r=>release=r);return response(completed(result));}},async call=>{
@@ -75,3 +75,4 @@ test('timeout and concurrent paid calls',async()=>{
   assert.equal((await first).status,200);
  });
 });
+

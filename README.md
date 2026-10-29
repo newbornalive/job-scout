@@ -6,7 +6,7 @@
 
 Job searches produce a lot of tabs and repeated decisions: Is this role relevant? Which resume should I use? Which requirements are actually supported by my experience? Job Scout brings those steps into one local workflow, with optional OpenAI analysis using each user's own API account.
 
-> **Status: v0.6 prototype.** Rule matching, mocked capture/API tests, and a local browser smoke test have passed. Live OpenAI calls and live LinkedIn extraction still require verification. The UI and AI explanations are currently in Chinese. Rule mode ships with generic example role vocabularies; API mode accepts your own resume text and preferences.
+> **Status: v0.6.1 prototype.** Rule matching, mocked capture/API tests, and a local browser smoke test have passed. Live OpenAI calls and live LinkedIn extraction still require verification. The UI and AI explanations are in English; README documentation is bilingual. Rule mode ships with generic example role vocabularies; API mode accepts your own resume text and preferences.
 
 ## What it does
 
@@ -37,10 +37,10 @@ The rule percentage is a heuristic keyword indicator, **not a calibrated fit sco
 1. Download this repository and extract it, or clone it.
 2. Open `chrome://extensions` or `edge://extensions` and enable **Developer mode**.
 3. Choose **Load unpacked** and select the folder containing `manifest.json`.
-4. Open a LinkedIn Jobs detail page, click the extension and select **读取并保存当前职位**.
-5. Alternatively, enter a title, paste a complete JD, confirm completeness, and select **分析 JD / 调整搜索关键词** followed by **保存职位**.
+4. Open a LinkedIn Jobs detail page, click the extension and select **Read and save job**.
+5. Alternatively, enter a title, paste a complete JD, confirm completeness, and select **Analyze JD / Refine search** followed by **Save job**.
 
-For the batch workflow, open LinkedIn search results and click **扫描 Title → JD → 匹配**. Keep the new workspace and original LinkedIn tab open. Only loaded cards are processed; scroll and scan again for more. Searches default to US jobs posted within 48 hours, newest first. Verify posting dates yourself when pasting or opening jobs manually.
+For the batch workflow, open LinkedIn search results and click **Scan titles and match jobs**. Keep the new workspace and original LinkedIn tab open. Only loaded cards are processed; scroll and scan again for more. Searches default to US jobs posted within 48 hours, newest first. Verify posting dates yourself when pasting or opening jobs manually.
 
 ## Enable API mode
 
@@ -60,8 +60,8 @@ Requires **Node.js 22+**, an OpenAI API account and an accessible model supporti
    npm start
    ```
 
-5. In **OpenAI API 模式**, enter the **connection token**, not your OpenAI key. Paste at least one resume and enter your preferences.
-6. Check the local connection, load a complete job, review the transmission notice, and click **用 OpenAI 分析当前职位**.
+5. In **OpenAI API mode**, enter the **connection token**, not your OpenAI key. Paste at least one resume and enter your preferences.
+6. Check the local connection, load a complete job, review the transmission notice, and click **Analyze job with OpenAI**.
 
 Keep the page open until completion. Results appear in the saved job record. See [setup and troubleshooting](docs/setup.md) for full details. Health checks do not call OpenAI or validate credentials.
 
@@ -119,9 +119,10 @@ api-contract.cjs       Structured output schema and evidence instructions
 
 - Verify live OpenAI and LinkedIn flows with documented results.
 - Make rule-mode profile presets configurable.
-- Add an English UI and a reproducible browser integration test.
+- Add a reproducible browser integration test.
 - Add a manual ChatGPT handoff and result-import workflow.
 
 ## License
 
 MIT. See [LICENSE](LICENSE). This project is not affiliated with LinkedIn or OpenAI.
+
