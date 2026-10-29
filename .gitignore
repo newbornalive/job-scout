@@ -5,8 +5,8 @@ node_modules/
 tmp/
 output/
 *.log
-erica-jobs*.json
-erica-jobs*.csv
+job-scout-jobs*.json
+job-scout-jobs*.csv
 
 # Personal documents and independent repository checkouts
 *.pdf

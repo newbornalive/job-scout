@@ -1,0 +1,11 @@
+{
+  "name": "job-scout",
+  "version": "0.6.0",
+  "private": true,
+  "description": "Local browser extension with optional bring-your-own-key OpenAI job analysis",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "start": "node --env-file=.env server.cjs",
+    "test": "node test.cjs && node capture.test.cjs && node --test api.test.cjs"
+  }
+}

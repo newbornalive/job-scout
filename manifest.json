@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Job Scout",
+  "version": "0.6.0",
+  "description": "Review LinkedIn job descriptions, rank resume matches and save applications locally.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Job Scout"
+  },
+  "host_permissions": [
+    "http://127.0.0.1/*"
+  ]
+}
