@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+tmp/
+output/
+*.log
+erica-jobs*.json
+erica-jobs*.csv
+
+# Personal documents and independent repository checkouts
+*.pdf
+*.docx
+workspaces/
