@@ -18,7 +18,7 @@ v0.6.1 原型。规则匹配、模拟 API／抓取测试和本地浏览器模拟
 
 ## 安装
 
-1. 下载并解压仓库。
+1. 从 [GitHub Releases](https://github.com/newbornalive/job-scout/releases/latest) 下载安装 ZIP 并解压。
 2. 打开 Chrome／Edge 扩展管理页，启用开发者模式。
 3. 点击“加载已解压的扩展程序”，选择含 `manifest.json` 的文件夹。
 4. 在 LinkedIn Jobs 页面读取职位，或粘贴完整 JD 后分析并保存。

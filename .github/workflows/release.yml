@@ -1,0 +1,59 @@
+name: Release
+on:
+  push:
+    branches: [main]
+    paths:
+      - manifest.json
+      - .github/workflows/release.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: job-scout-release
+  cancel-in-progress: false
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/package_release.py
+  publish:
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/package_release.py
+      - name: Create version tag and publish assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION=$(python -c 'import json; print(json.load(open("manifest.json"))["version"])')
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; refusing to replace published assets."
+            exit 1
+          fi
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Job Scout $TAG" \
+            --notes-file "docs/releases/$TAG.md" \
+            --latest \
+            "dist/job-scout-$TAG.zip" \
+            "dist/job-scout-$TAG.sha256"

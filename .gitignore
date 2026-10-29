@@ -13,3 +13,6 @@ job-scout-jobs*.csv
 *.docx
 workspaces/
 
+
+# Generated release assets
+dist/

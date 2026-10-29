@@ -34,7 +34,7 @@ The rule percentage is a heuristic keyword indicator, **not a calibrated fit sco
 
 ## Install and try rule mode
 
-1. Download this repository and extract it, or clone it.
+1. Download the ZIP from [GitHub Releases](https://github.com/newbornalive/job-scout/releases/latest) and extract it, or clone this repository.
 2. Open `chrome://extensions` or `edge://extensions` and enable **Developer mode**.
 3. Choose **Load unpacked** and select the folder containing `manifest.json`.
 4. Open a LinkedIn Jobs detail page, click the extension and select **Read and save job**.
@@ -126,3 +126,9 @@ api-contract.cjs       Structured output schema and evidence instructions
 
 MIT. See [LICENSE](LICENSE). This project is not affiliated with LinkedIn or OpenAI.
 
+
+## Release process
+
+Versioned installation packages and SHA-256 checksums are published through [GitHub Releases](https://github.com/newbornalive/job-scout/releases). To prepare a new release, update both version fields in `manifest.json` and `package.json`, add `docs/releases/v<VERSION>.md`, and push to `main`. The Release workflow tests on Windows and Linux, validates and packages an explicit file allowlist, then creates the version tag and publishes the assets. Existing releases are never overwritten. Manual workflow dispatch is also supported from `main`.
+
+Build the same package locally with `python scripts/package_release.py`. Release ZIPs exclude `.env`, personal documents, saved records and development checkouts. GitHub-generated source archives are separate from the packaged installation ZIP.
